@@ -1,17 +1,6 @@
-use actix_web::{web, App, HttpRequest, HttpResponse, HttpServer, Responder};
-
-async fn greet(req: HttpRequest) -> impl Responder {
-    let name = req.match_info().get("name").unwrap_or("Worlds");
-    HttpResponse::Ok().body(
-        format!("Hello {}!", &name)
-    )
-}
+use newsletter_backend_example::run;
 
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| {
-        App::new()
-            .route("/", web::get().to(greet))
-            .route("/{name}", web::get().to(greet))
-    }).bind("127.0.0.1:8080")?.run().await
+    run()?.await
 }
